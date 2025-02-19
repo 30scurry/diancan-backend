@@ -2,16 +2,27 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const { createTables } = require('./schema');
 
-const dbPath = path.resolve(__dirname, '../../restaurant.db');
+// 根据环境选择数据库路径
+const dbPath = process.env.NODE_ENV === 'production'
+  ? path.join('/opt/render/project/src/data', 'restaurant.db')
+  : path.resolve(__dirname, '../../restaurant.db');
+
 let db;
 
 function getDatabase() {
   if (!db) {
+    // 确保数据库目录存在
+    const dbDir = path.dirname(dbPath);
+    if (!require('fs').existsSync(dbDir)) {
+      require('fs').mkdirSync(dbDir, { recursive: true });
+    }
+
     db = new sqlite3.Database(dbPath, (err) => {
       if (err) {
         console.error('连接数据库失败:', err);
       } else {
         console.log('成功连接到数据库');
+        console.log('数据库路径:', dbPath);
       }
     });
   }
