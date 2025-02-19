@@ -1,6 +1,3 @@
-# diancan-backend
-点餐app后端
-
 # 点餐小程序后端服务
 
 这是点餐小程序的后端服务，提供 RESTful API 接口。
@@ -12,7 +9,7 @@
 - 订单管理（创建、查询）
 - SQLite 数据存储
 
-## 安装
+## 本地开发
 
 ```bash
 # 安装依赖
@@ -24,6 +21,33 @@ npm run dev
 # 生产模式运行
 npm start
 ```
+
+## Render 部署指南
+
+1. **准备工作**
+   - 注册 [Render](https://render.com) 账号
+   - 将代码推送到 GitHub 仓库
+
+2. **部署步骤**
+   - 登录 Render 控制台
+   - 点击 "New +" 按钮
+   - 选择 "Web Service"
+   - 选择你的 GitHub 仓库
+   - 填写以下信息：
+     - Name: diancan-backend（或你喜欢的名称）
+     - Environment: Node
+     - Build Command: `npm install`
+     - Start Command: `node app.js`
+   - 点击 "Create Web Service"
+
+3. **环境配置**
+   - 部署完成后，服务会自动启动
+   - 数据库文件会自动存储在 `/opt/render/project/src/data` 目录
+   - 可以在 Environment 选项卡中添加环境变量
+
+4. **访问服务**
+   - 部署成功后，可以通过 `https://你的服务名.onrender.com` 访问
+   - 首次访问可能需要等待约 30 秒服务启动
 
 ## API 接口
 
