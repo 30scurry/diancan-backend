@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "点餐小程序后端服务",
   "main": "app.js",
+  "engines": {
+    "node": ">=16.x"
+  },
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
