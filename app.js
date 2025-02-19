@@ -8,11 +8,21 @@ const { initDatabase } = require('./src/db/init');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// 中间件
-app.use(cors());
+// 允许所有来源的跨域请求
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
-// 路由
+// 健康检查接口
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: '服务器运行正常' });
+});
+
+// API 路由
 app.use('/api/dishes', dishesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/orders', ordersRouter);
@@ -22,6 +32,12 @@ initDatabase().then(() => {
   console.log('数据库初始化成功');
 }).catch(err => {
   console.error('数据库初始化失败:', err);
+});
+
+// 错误处理中间件
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: '服务器内部错误' });
 });
 
 // 启动服务器
